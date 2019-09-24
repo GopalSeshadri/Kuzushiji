@@ -6,7 +6,10 @@ from keras.utils import to_categorical
 from keras.preprocessing.image import array_to_img, img_to_array
 
 DATA_NAME = 'k49'
-classes_dict = {'kmnist' : 10, 'k49' : 49}
+MODEL_NAME = 'lenet'
+classes_dict = {'k49' : 10, 'k49' : 49}
+BATCH_SIZE = 128
+EPOCHS = 20
 
 ## Loading Data
 def readData(data_name):
@@ -24,26 +27,31 @@ def oneHot(label, data_name, classes_dict):
     label_onehot = to_categorical(label, num_classes = classes_dict[data_name])
     return label_onehot
 
-def reshapeResize(img_array, data_name):
-    if data_name == 'kmnist':
+def reshapeResize(img_array, model_name):
+    if model_name == 'lenet':
         img_array = img_array.reshape(-1, 28, 28, 1)
     else:
+        img_array = img_array.reshape(-1, 28, 28, 1)
+        img_array = np.asarray([img_to_array(array_to_img(img, scale = False).resize((48, 48))) for img in img_array])
         img_array = img_array.reshape(-1, 48, 48, 1)
-        img_array = np.asarray([img_to_array(array_to_img(img, scale = False).resize((48, 48, 1))) for img in img_array])
 
+    img_array = img_array / 255
     return img_array
 
 
 train_x, train_y, test_x, test_y = readData(DATA_NAME)
 
-train_x = reshapeResize(train_x, DATA_NAME)
-test_x = reshapeResize(train_x, DATA_NAME)
+train_x = reshapeResize(train_x, MODEL_NAME)
+test_x = reshapeResize(test_x, MODEL_NAME)
 
 train_y_onehot = oneHot(train_y, DATA_NAME, classes_dict)
 test_y_onehot = oneHot(test_y, DATA_NAME, classes_dict)
 
-print(train_x.shape)
-
-lenet5 = Models.leNet5(classes_dict[DATA_NAME])
-lenet5.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = 10, batch_size = 128)
-print(lenet5.evaluate(test_x, test_y_onehot))
+if MODEL_NAME == 'lenet':
+    lenet5 = Models.leNet5(classes_dict[DATA_NAME])
+    lenet5.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
+    print(lenet5.evaluate(test_x, test_y_onehot))
+elif MODEL_NAME == 'vgg':
+    vgg16 = Models.vgg16(classes_dict[DATA_NAME])
+    vgg16.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
+    print(vgg16.evaluate(test_x, test_y_onehot))
