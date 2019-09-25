@@ -5,11 +5,11 @@ from models import Models
 from keras.utils import to_categorical
 from keras.preprocessing.image import array_to_img, img_to_array
 
-DATA_NAME = 'k49'
-MODEL_NAME = 'lenet'
-classes_dict = {'k49' : 10, 'k49' : 49}
+DATA_NAME = 'kmnist'
+MODEL_NAME = 'vgg'
+classes_dict = {'kmnist' : 10, 'k49' : 49}
 BATCH_SIZE = 128
-EPOCHS = 20
+EPOCHS = 2
 
 ## Loading Data
 def readData(data_name):
