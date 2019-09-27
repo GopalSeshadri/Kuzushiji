@@ -32,8 +32,8 @@ def reshapeResize(img_array, model_name):
         img_array = img_array.reshape(-1, 28, 28, 1)
     else:
         img_array = img_array.reshape(-1, 28, 28, 1)
-        img_array = np.asarray([img_to_array(array_to_img(img, scale = False).resize((48, 48))) for img in img_array])
-        img_array = img_array.reshape(-1, 48, 48, 1)
+        img_array = np.asarray([img_to_array(array_to_img(img, scale = False).resize((98, 98))) for img in img_array])
+        img_array = img_array.reshape(-1, 98, 98, 1)
 
     img_array = img_array / 255
     return img_array

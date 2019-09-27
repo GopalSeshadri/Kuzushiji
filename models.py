@@ -28,27 +28,29 @@ class Models:
         return lenet_model
 
     def vgg16(num_classes):
-        inp = Input(shape = (48, 48, 1))
-        x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu', padding ='same')(inp)
-        x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu', padding ='same')(x)
+        inp = Input(shape = (98, 98, 1))
+        x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu')(inp)
+        x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu')(x)
         x = MaxPool2D(pool_size = (2, 2))(x)
 
-        x = Conv2D(filters = 128, kernel_size = (3, 3), activation = 'relu', padding ='same')(x)
-        x = Conv2D(filters = 128, kernel_size = (3, 3), activation = 'relu', padding ='same')(x)
+        x = Conv2D(filters = 128, kernel_size = (3, 3), activation = 'relu')(x)
+        x = Conv2D(filters = 128, kernel_size = (3, 3), activation = 'relu')(x)
         x = MaxPool2D(pool_size = (2, 2))(x)
 
-        x = Conv2D(filters = 256, kernel_size = (3, 3), activation = 'relu', padding ='same')(x)
-        x = Conv2D(filters = 256, kernel_size = (3, 3), activation = 'relu', padding ='same')(x)
+        x = Conv2D(filters = 256, kernel_size = (3, 3), activation = 'relu')(x)
+        x = Conv2D(filters = 256, kernel_size = (3, 3), activation = 'relu')(x)
         x = MaxPool2D(pool_size = (2, 2))(x)
 
-        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu', padding ='same')(x)
-        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu', padding ='same')(x)
-        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu', padding ='same')(x)
+        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
+        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
+        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
         x = MaxPool2D(pool_size = (2, 2))(x)
 
-        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu', padding ='same')(x)
-        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu', padding ='same')(x)
-        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu', padding ='same')(x)
+        print(x.shape)
+        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
+        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
+        x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
+        print(x.shape)
         x = MaxPool2D(pool_size = (2, 2))(x)
         print(x.shape)
 
