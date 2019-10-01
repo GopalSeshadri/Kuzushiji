@@ -5,8 +5,8 @@ from models import Models
 from keras.utils import to_categorical
 from keras.preprocessing.image import array_to_img, img_to_array
 
-DATA_NAME = 'kmnist'
-MODEL_NAME = 'vgg'
+DATA_NAME = 'k49'
+MODEL_NAME = 'vgg16'
 classes_dict = {'kmnist' : 10, 'k49' : 49}
 BATCH_SIZE = 128
 EPOCHS = 2
@@ -30,10 +30,14 @@ def oneHot(label, data_name, classes_dict):
 def reshapeResize(img_array, model_name):
     if model_name == 'lenet':
         img_array = img_array.reshape(-1, 28, 28, 1)
-    else:
+    elif model_name == 'vgg16':
         img_array = img_array.reshape(-1, 28, 28, 1)
-        img_array = np.asarray([img_to_array(array_to_img(img, scale = False).resize((98, 98))) for img in img_array])
-        img_array = img_array.reshape(-1, 98, 98, 1)
+        img_array = np.asarray([img_to_array(array_to_img(img, scale = True).resize((92, 92))) for img in img_array])
+        img_array = img_array.reshape(-1, 92, 92, 1)
+    elif model_name == 'seven':
+        img_array = img_array.reshape(-1, 28, 28, 1)
+        img_array = np.asarray([img_to_array(array_to_img(img, scale = True).resize((64, 64))) for img in img_array])
+        img_array = img_array.reshape(-1, 64, 64, 1)
 
     img_array = img_array / 255
     return img_array
@@ -51,7 +55,11 @@ if MODEL_NAME == 'lenet':
     lenet5 = Models.leNet5(classes_dict[DATA_NAME])
     lenet5.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
     print(lenet5.evaluate(test_x, test_y_onehot))
-elif MODEL_NAME == 'vgg':
+elif MODEL_NAME == 'vgg16':
     vgg16 = Models.vgg16(classes_dict[DATA_NAME])
     vgg16.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
     print(vgg16.evaluate(test_x, test_y_onehot))
+elif MODEL_NAME == 'seven':
+    seven = Models.seven(classes_dict[DATA_NAME])
+    seven.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
+    print(seven.evaluate(test_x, test_y_onehot))
