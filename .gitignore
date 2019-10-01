@@ -1,4 +1,5 @@
 /Venv/
+/Data/KKANJI/
 /Embeddings/
 *.csv
 *.pyc

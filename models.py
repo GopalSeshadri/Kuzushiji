@@ -42,19 +42,6 @@ class Models:
         x = Conv2D(filters = 256, kernel_size = (3, 3), activation = 'relu')(x)
         x = MaxPool2D(pool_size = (2, 2))(x)
 
-        # x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
-        # x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
-        # x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
-        # x = MaxPool2D(pool_size = (2, 2))(x)
-
-        print(x.shape)
-        # x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
-        # x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
-        # x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
-        # print(x.shape)
-        # x = MaxPool2D(pool_size = (2, 2))(x)
-        # print(x.shape)
-
         x = Flatten()(x)
         x = Dense(1024, activation = 'relu')(x)
         x = Dropout(0.2)(x)
