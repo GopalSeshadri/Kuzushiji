@@ -1,5 +1,5 @@
 import keras
-from keras.layers import Input, Dense, Flatten, Dropout
+from keras.layers import Input, Dense, Flatten, Dropout, Concatenate
 from keras.layers import Conv2D, MaxPool2D, AvgPool2D
 from keras.models import Model
 
@@ -48,6 +48,48 @@ class Models:
         x = Dense(512, activation = 'relu')(x)
         out = Dense(num_classes, activation = 'softmax')(x)
 
+        seven_model = Model(input = inp, output = out)
+        seven_model.compile(loss = 'categorical_crossentropy',
+                    optimizer = 'adam',
+                    metrics = ['accuracy'])
+
+        return seven_model
+
+    def seven_stacked(num_classes):
+        inp = Input(shape = (64, 64, 1))
+        x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu')(inp)
+        x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu')(x)
+
+        x1 = MaxPool2D(pool_size = (2, 2))(x)
+        x1 = Conv2D(filters = 128, kernel_size = (3, 3), activation = 'relu')(x1)
+        x1 = Conv2D(filters = 128, kernel_size = (3, 3), activation = 'relu')(x1)
+        x1 = MaxPool2D(pool_size = (2, 2))(x1)
+        x1 = Conv2D(filters = 256, kernel_size = (3, 3), activation = 'relu')(x1)
+        x1 = Conv2D(filters = 256, kernel_size = (3, 3), activation = 'relu')(x1)
+        x1 = Conv2D(filters = 256, kernel_size = (3, 3), activation = 'relu')(x1)
+        x1 = MaxPool2D(pool_size = (2, 2))(x1)
+        x1 = Flatten()(x1)
+
+        x2 = MaxPool2D(pool_size = (2, 2))(x)
+        x2 = Conv2D(filters = 128, kernel_size = (3, 3), activation = 'relu')(x2)
+        x2 = Conv2D(filters = 128, kernel_size = (3, 3), activation = 'relu')(x2)
+        x2 = MaxPool2D(pool_size = (2, 2))(x2)
+        x2 = Conv2D(filters = 256, kernel_size = (3, 3), activation = 'relu')(x2)
+        x2 = Conv2D(filters = 256, kernel_size = (3, 3), activation = 'relu')(x2)
+        x2 = Conv2D(filters = 256, kernel_size = (3, 3), activation = 'relu')(x2)
+        x2 = MaxPool2D(pool_size = (2, 2))(x2)
+        x2 = Flatten()(x2)
+
+        print(x1.shape)
+        print(x2.shape)
+        x = Concatenate(axis = 1)([x1, x2])
+        print(x.shape)
+
+        x = Dense(1024, activation = 'relu')(x)
+        x = Dropout(0.2)(x)
+        x = Dense(512, activation = 'relu')(x)
+        out = Dense(num_classes, activation = 'softmax')(x)
+
         vgg16_model = Model(input = inp, output = out)
         vgg16_model.compile(loss = 'categorical_crossentropy',
                     optimizer = 'adam',
@@ -74,13 +116,10 @@ class Models:
         x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
         x = MaxPool2D(pool_size = (2, 2))(x)
 
-        print(x.shape)
         x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
         x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
         x = Conv2D(filters = 512, kernel_size = (3, 3), activation = 'relu')(x)
-        print(x.shape)
         x = MaxPool2D(pool_size = (2, 2))(x)
-        print(x.shape)
 
         x = Flatten()(x)
         x = Dense(1024, activation = 'relu')(x)
