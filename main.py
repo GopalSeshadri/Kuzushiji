@@ -4,12 +4,13 @@ import os
 from models import Models
 from keras.utils import to_categorical
 from keras.preprocessing.image import array_to_img, img_to_array
+from utilities import Utilities
 
 DATA_NAME = 'k49'
-MODEL_NAME = 'seven_stacked'
+MODEL_NAME = 'lenet'
 classes_dict = {'kmnist' : 10, 'k49' : 49}
 BATCH_SIZE = 128
-EPOCHS = 2
+EPOCHS = 50
 
 ## Loading Data
 def readData(data_name):
@@ -60,19 +61,19 @@ if MODEL_NAME == 'lenet':
     lenet5 = Models.leNet5(classes_dict[DATA_NAME])
     lenet5.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
     print(lenet5.evaluate(test_x, test_y_onehot))
-    saveModel(lenet5, 'lenet')
+    Utilities.saveModel(lenet5, 'lenet')
 elif MODEL_NAME == 'vgg16':
     vgg16 = Models.vgg16(classes_dict[DATA_NAME])
     vgg16.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
     print(vgg16.evaluate(test_x, test_y_onehot))
-    saveModel(vgg16, 'vgg16')
+    Utilities.saveModel(vgg16, 'vgg16')
 elif MODEL_NAME == 'seven':
     seven = Models.seven(classes_dict[DATA_NAME])
     seven.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
     print(seven.evaluate(test_x, test_y_onehot))
-    saveModel(seven, 'seven')
+    Utilities.saveModel(seven, 'seven')
 elif MODEL_NAME == 'seven_stacked':
     seven_stacked = Models.seven_stacked(classes_dict[DATA_NAME])
     seven_stacked.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
     print(seven_stacked.evaluate(test_x, test_y_onehot))
-    saveModel(seven_stacked, 'seven_stacked')
+    Utilities.saveModel(seven_stacked, 'seven_stacked')
