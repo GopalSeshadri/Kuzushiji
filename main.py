@@ -8,7 +8,7 @@ from utilities import Utilities
 
 DATA_NAME = 'k49'
 MODEL_NAME = 'lenet'
-classes_dict = {'kmnist' : 10, 'k49' : 49}
+classes_dict = {'kmnist' : 10, 'k49' : 49, 'kkanji' : 1000}
 BATCH_SIZE = 128
 EPOCHS = 50
 

@@ -60,3 +60,12 @@ class Utilities:
         with open('Models/{}.pickle'.format(dict_name), 'rb') as file:
             dict_obj = pickle.load(file)
         return dict_obj
+
+    def saveData(data_obj, data_name):
+        with open('Models/Intermediate/{}.pickle'.format(data_name), 'wb') as file:
+            pickle.dump(data_obj, file)
+
+    def loadData(data_name):
+        with open ('Models/Intermediate/{}.pickle'.format(data_name), 'rb') as file:
+            data_obj = pickle.load(file)
+        return data_obj

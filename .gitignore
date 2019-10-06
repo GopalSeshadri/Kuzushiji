@@ -1,5 +1,6 @@
 /Venv/
 /Data/KKANJI/
+/Models/Intermediate/
 /Embeddings/
 *.csv
 *.pyc
