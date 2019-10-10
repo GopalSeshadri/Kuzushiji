@@ -6,6 +6,8 @@ from keras.utils import to_categorical
 from keras.preprocessing.image import array_to_img, img_to_array
 from utilities import Utilities
 from matplotlib.image import imread
+from keras.applications.vgg16 import VGG16
+from keras.applications.vgg16 import preprocess_input
 
 def findtop1000():
     path = 'Data/KKANJI/'
@@ -49,7 +51,7 @@ def reshapeResize(img_array, model_name):
     return img_array
 
 DATA_NAME = 'kkanji'
-MODEL_NAME = 'lenet'
+MODEL_NAME = 'vgg16'
 classes_dict = {'kmnist' : 10, 'k49' : 49, 'kkanji' : 1000}
 BATCH_SIZE = 32
 EPOCHS = 20
@@ -82,12 +84,18 @@ train_x_reshaped = reshapeResize(train_x, MODEL_NAME)
 train_y_onehot = to_categorical(train_y, num_classes = classes_dict[DATA_NAME])
 
 print(train_x_reshaped.shape)
-print(train_y)
+print(train_y_onehot.shape)
 
-lenet5 = Models.leNet5_kanji(classes_dict[DATA_NAME])
-lenet5.fit(train_x_reshaped, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
-Utilities.saveModel(lenet5, 'lenet_{}'.format(DATA_NAME))
+vgg = VGG16(input_shape = (64, 64), weights = 'imagenet', include_top = False)
 
-# seven = Models.seven(classes_dict[DATA_NAME])
-# seven.fit(train_x_reshaped, train_y, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
-# Utilities.saveModel(seven, 'seven')
+for layer in vgg.layers:
+    layer.trainable = False
+
+x = Flatten()(vgg.output)
+out = Dense(classes_dict[DATA_NAME], activation = 'softmax')(x)
+
+model = Model(inputs = vgg.input, outputs = out)
+model.compile(loss = 'categorical_crossentropy',
+            optimizer = 'adam',
+            metrics = ['accuracy'])
+model.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
