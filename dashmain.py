@@ -13,14 +13,13 @@ from keras.models import model_from_json
 from keras import backend as K
 import base64
 from PIL import Image
+from keras.preprocessing.image import array_to_img, img_to_array
 
 app = dash.Dash()
 server = app.server
 
 DATA_NAME = 'k49'
-
-image_filename = 'assets/luffy.jpg'
-encoded_image = base64.b64encode(open(image_filename, 'rb').read())
+image_filename = 'assets/1.png'
 
 test_x = np.load('Data/{}/{}-test-imgs.npz'.format(DATA_NAME.upper(), DATA_NAME.lower()))['arr_0']
 test_y = np.load('Data/{}/{}-test-labels.npz'.format(DATA_NAME.upper(), DATA_NAME.lower()))['arr_0']
@@ -118,9 +117,9 @@ def affectDisplayImage(n_clicks):
     idx = np.random.randint(0, len(test_y))
 
     actual = mapping_df[mapping_df['index'] == test_y[idx]]['char']
-    image = Image.fromarray(test_x[idx], None)
-    image.save('assets/image.png')
-    return 'assets/image.png', actual, actual
+    image_filename = 'assets/{}.png'.format(idx)
+
+    return image_filename, actual, actual
 
 
 

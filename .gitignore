@@ -2,6 +2,7 @@
 /Data/KKANJI/
 /Models/Intermediate/
 /Embeddings/
+/assets/
 *.csv
 *.pyc
 *.DS_Store

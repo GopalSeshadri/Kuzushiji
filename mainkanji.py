@@ -88,6 +88,7 @@ print(train_y_onehot.shape)
 
 vgg = VGG16(input_shape = (64, 64), weights = 'imagenet', include_top = False)
 
+
 for layer in vgg.layers:
     layer.trainable = False
 
