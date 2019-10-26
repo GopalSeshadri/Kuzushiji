@@ -57,30 +57,30 @@ def generateImages(img_array):
 
 
 train_x, train_y, test_x, test_y = readData(DATA_NAME)
-generateImages(test_x)
-# train_x = reshapeResize(train_x, MODEL_NAME)
-# test_x = reshapeResize(test_x, MODEL_NAME)
-#
-# train_y_onehot = oneHot(train_y, DATA_NAME, classes_dict)
-# test_y_onehot = oneHot(test_y, DATA_NAME, classes_dict)
-#
-# if MODEL_NAME == 'lenet':
-#     lenet5 = Models.leNet5(classes_dict[DATA_NAME])
-#     lenet5.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
-#     print(lenet5.evaluate(test_x, test_y_onehot))
-#     Utilities.saveModel(lenet5, 'lenet')
-# elif MODEL_NAME == 'vgg16':
-#     vgg16 = Models.vgg16(classes_dict[DATA_NAME])
-#     vgg16.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
-#     print(vgg16.evaluate(test_x, test_y_onehot))
-#     Utilities.saveModel(vgg16, 'vgg16')
-# elif MODEL_NAME == 'seven':
-#     seven = Models.seven(classes_dict[DATA_NAME])
-#     seven.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
-#     print(seven.evaluate(test_x, test_y_onehot))
-#     Utilities.saveModel(seven, 'seven')
-# elif MODEL_NAME == 'seven_stacked':
-#     seven_stacked = Models.seven_stacked(classes_dict[DATA_NAME])
-#     seven_stacked.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
-#     print(seven_stacked.evaluate(test_x, test_y_onehot))
-#     Utilities.saveModel(seven_stacked, 'seven_stacked')
+# generateImages(test_x)
+train_x = reshapeResize(train_x, MODEL_NAME)
+test_x = reshapeResize(test_x, MODEL_NAME)
+
+train_y_onehot = oneHot(train_y, DATA_NAME, classes_dict)
+test_y_onehot = oneHot(test_y, DATA_NAME, classes_dict)
+
+if MODEL_NAME == 'lenet':
+    lenet5 = Models.leNet5(classes_dict[DATA_NAME])
+    lenet5.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
+    print(lenet5.evaluate(test_x, test_y_onehot))
+    Utilities.saveModel(lenet5, 'lenet')
+elif MODEL_NAME == 'vgg16':
+    vgg16 = Models.vgg16(classes_dict[DATA_NAME])
+    vgg16.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
+    print(vgg16.evaluate(test_x, test_y_onehot))
+    Utilities.saveModel(vgg16, 'vgg16')
+elif MODEL_NAME == 'seven':
+    seven = Models.seven(classes_dict[DATA_NAME])
+    seven.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
+    print(seven.evaluate(test_x, test_y_onehot))
+    Utilities.saveModel(seven, 'seven')
+elif MODEL_NAME == 'seven_stacked':
+    seven_stacked = Models.seven_stacked(classes_dict[DATA_NAME])
+    seven_stacked.fit(train_x, train_y_onehot, validation_split = 0.2, epochs = EPOCHS, batch_size = BATCH_SIZE)
+    print(seven_stacked.evaluate(test_x, test_y_onehot))
+    Utilities.saveModel(seven_stacked, 'seven_stacked')
