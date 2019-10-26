@@ -107,8 +107,10 @@ def findPrediction(model_name, input_img):
     Returns:
     pred_class (int) : The class of the prediction, it will be an integer from 0 to 48.
     '''
-    input_img = input_img.reshape(-1, 28, 28, 1)
-    print(input_img.shape, file=sys.stderr)
+    input_img = input_img.reshape(28, 28, 1)
+    input_img = img_to_array(array_to_img(input_img, scale = True).resize((64, 64)))
+    input_img = input_img.reshape(-1, 64, 64, 1)
+
     json_file = open('Models/{}.json'.format(model_name.lower()), 'r')
     loaded_model_json = json_file.read()
     json_file.close()
@@ -124,14 +126,17 @@ def findPrediction(model_name, input_img):
             Output(component_id = 'actual-text', component_property = 'value')],
             [Input(component_id = 'submit-button', component_property = 'n_clicks')])
 def affectDisplayImage(n_clicks):
+    '''
+    A callback function that takes the button clicks as input, selects a random index and
+    returns the image filename of the image at the corresponding index, actual and predicted
+    unicodes as output.
+    '''
     idx = np.random.randint(0, len(test_y))
     actual = mapping_df[mapping_df['index'] == test_y[idx]]['char']
     image_filename = 'assets/{}.png'.format(idx)
-    print(test_x[idx].shape, file=sys.stderr)
-    pred_class = findPrediction('lenet', test_x[idx])
+    pred_class = findPrediction('seven_stacked', test_x[idx])
     prediction = mapping_df[mapping_df['index'] == pred_class]['char']
     return image_filename, actual, prediction
-
 
 
 if __name__ == '__main__':
