@@ -6,6 +6,16 @@ from keras.models import Model
 class Models:
 
     def leNet5(num_classes):
+        '''
+        This function implements the leNet5 architecture. It takes the number of classes as input
+        and returns the model as output.
+
+        Parameters:
+        num_classes(int) : The number of output classes
+
+        Returns:
+        lenet_model (Keras Model) : A keras model
+        '''
         inp = Input(shape = (28, 28, 1))
         x = Conv2D(filters = 6, kernel_size = (3, 3), activation = 'relu')(inp)
         x = AvgPool2D()(x)
@@ -28,6 +38,16 @@ class Models:
         return lenet_model
 
     def seven(num_classes):
+        '''
+        This function implements the seven architecture. It takes the number of classes as input
+        and returns the model as output.
+
+        Parameters:
+        num_classes(int) : The number of output classes
+
+        Returns:
+        seven_model (Keras Model) : A keras model
+        '''
         inp = Input(shape = (64, 64, 1))
         x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu')(inp)
         x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu')(x)
@@ -56,6 +76,16 @@ class Models:
         return seven_model
 
     def seven_stacked(num_classes):
+        '''
+        This function implements the stacked version of seven architecture. It takes
+        the number of classes as input and returns the model as output.
+
+        Parameters:
+        num_classes(int) : The number of output classes
+
+        Returns:
+        seven_stacked_model (Keras Model) : A keras model
+        '''
         inp = Input(shape = (64, 64, 1))
         x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu')(inp)
         x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu')(x)
@@ -94,6 +124,16 @@ class Models:
         return seven_stacked_model
 
     def vgg16(num_classes):
+        '''
+        This function implements the VGG16 architecture. It takes the number of classes as input
+        and returns the model as output.
+
+        Parameters:
+        num_classes(int) : The number of output classes
+
+        Returns:
+        vgg16_model (Keras Model) : A keras model
+        '''
         inp = Input(shape = (92, 92, 1))
         x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu')(inp)
         x = Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu')(x)

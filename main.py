@@ -14,6 +14,18 @@ EPOCHS = 50
 
 ## Loading Data
 def readData(data_name):
+    '''
+    This function reads the data and returns the train and test data and labels.
+
+    Parameters:
+    data_name (str) : The name of the data, it can be either kminst or k49
+
+    Returns:
+    train_x (numpy array) : The array of normalised images from training set
+    train_y (numpy array) : The array of image labels from training set. Labels can be from 0 to 48
+    test_x (numpy array) : The array of normalised images from test set.
+    test_y (numpy array) : The array of image label from the test set
+    '''
 
     # data_name can be either kmnist or k49
     train_x = np.load('Data/{}/{}-train-imgs.npz'.format(data_name.upper(), data_name.lower()))['arr_0']
@@ -25,10 +37,32 @@ def readData(data_name):
     return train_x, train_y, test_x, test_y
 
 def oneHot(label, data_name, classes_dict):
+    '''
+    It takes an array of labels, data set name and the classes dictionary and returns the one-hot representation
+    oof the array of labels.
+
+    Parameters:
+    label (numpy array) : The array of labels, it can be either training or testing data.
+    data_name (string) : The name of the dataset, it can be kmnist or k49
+    classes_dict (dict) : A dictionary of dataname and classes counts
+
+    Returns:
+    label_onehot (numpy array) : The array of one hot representation of labels.
+    '''
     label_onehot = to_categorical(label, num_classes = classes_dict[data_name])
     return label_onehot
 
 def reshapeResize(img_array, model_name):
+    '''
+    It takes the input array and it reshapes the array based on the model name. It returns the reshaped array.
+
+    Parameters:
+    img_array (numpy array) : The array of normalised images.
+    model_name (string) : The name of the model
+
+    Returns:
+    img_array(numpy array) : The reshaped array
+    '''
     if model_name == 'lenet':
         img_array = img_array.reshape(-1, 28, 28, 1)
     elif model_name == 'vgg16':
@@ -49,6 +83,13 @@ def reshapeResize(img_array, model_name):
     return img_array
 
 def generateImages(img_array):
+    '''
+    This function takes as input an array representation of normalised images and generates the image as a PNG file
+    in the assets directory.
+
+    Parameters:
+    img_array (numpy array) : An array of normalised images
+    '''
     img_array = img_array.reshape(-1, 28, 28, 1)
     for idx, img in enumerate(img_array):
         image_from_array = array_to_img(img, scale = True).resize((100, 100))
